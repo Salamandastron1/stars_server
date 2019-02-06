@@ -12,7 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000);
 app.options('*', cors(corsOptions))
 
-app.get('/signin', )
+app.get('/login', )
+app.post('/signup')
+app.put('/stars')
+app.put('/avatar')
+app.delete('/deleteLogins')
 
 
 app.listen(app.get('port'), () => {
