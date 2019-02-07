@@ -9,10 +9,18 @@ exports.create = function(request, response) {
     .catch(error => response.status(500).json({ error }))
 }
 
-exports.put = function(request, response) {
+exports.update = function(request, response) {
   const { body } = request;
 
   Avatar.update(body)
     .then(() => response.status(204).json({ message 'Successfully updated'}))
     .catch(error => response.status(500).json({ error }))
+}
+
+exports.delete = function(request, response) {
+  const { body } = request;
+
+  Avatar.delete(body)
+    .then(() => response.status(204).json({ message: 'successfully deleted'}))
+    .catch(error => response.status(500).json({ error}));
 }
