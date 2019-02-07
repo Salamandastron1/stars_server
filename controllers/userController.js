@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Avatar = require('../models/Avatar');
 
 exports.show = function(request, response) {
   const { body } = request;
@@ -22,7 +21,7 @@ exports.create = function(request, response) {
 
 exports.update = function(request, response) {
   const { body } = request;
-
+  // add in code for checking params from body
   User.update(body)
     .then(() => response.status(204).json({ message: 'Stars updated'}))
     .catch(error => response.status(500).json({ error }))
