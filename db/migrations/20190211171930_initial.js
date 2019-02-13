@@ -15,5 +15,8 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  
+  return Promise.all([
+    knex.dropTable('avatar_url'),
+    knex.dropTable('users');
+  ])
 };
