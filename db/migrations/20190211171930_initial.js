@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
       table.string('email').unique();
       table.string('password');
       table.integer('stars');
-    },
+    }),
     knex.schema.createTable('avatars', table => {
       table.increments('id').primary();
       table.string('avatar_url');
@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.dropTable('avatar_url'),
-    knex.dropTable('users');
+    knex.dropTable('avatars'),
+    knex.dropTable('users')
   ])
 };
