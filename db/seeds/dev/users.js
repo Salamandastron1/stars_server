@@ -17,7 +17,7 @@ const userData = [
     stars: 20,
   }
 ];
-const avatar = [
+const avatars = [
   'www.hellokitty.com/url?3',
   'www.kittykatsrcool.org/users/api/v3/user=moot?moot',
   'https//:localhost/3000'
@@ -25,18 +25,17 @@ const avatar = [
 
 function usersCreate(knex, user) {
   const { username, email, password, stars } = user;
-  if(stars) {
+
     return knex('users').insert({
       username,
       email,
       password,
       stars,
     })
-  }
 }
 
 function avatarsCreate(knex, url) {
-  return knex('avatars').insert(url)
+  return knex('avatars').insert({avatar_url: url})
 }
 
 exports.seed = function(knex, Promise) {
@@ -48,10 +47,9 @@ exports.seed = function(knex, Promise) {
         return usersCreate(knex, user)
       })
       const avatarPromises = avatars.map(url => {
-        return avatarsCreate(url)
+        return avatarsCreate(knex, url)
       })
       
-      return Promise.all([...userPromises, ...avatarPromises)
-    );
+      return Promise.all([...userPromises, ...avatarPromises])
   });
 };
