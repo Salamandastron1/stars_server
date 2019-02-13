@@ -23,8 +23,16 @@ const avatar = [
   'https//:localhost/3000'
 ]
 
-function usersCreate(knex, users) {
-
+function usersCreate(knex, user) {
+  const { username, email, password, stars } = user;
+  if(stars) {
+    knex('users').insert({
+      username,
+      email,
+      password,
+      stars,
+    }).then(userId => )
+  }
 }
 
 function avatarsCreate(knex, avatars) {
@@ -34,11 +42,13 @@ function avatarsCreate(knex, avatars) {
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('avatars').del()
-    .then(() => knex('users'.del())
-    .then(() =>
-      const userPromises = [];
+    .then(() => knex('users').del())
+    .then(() => {
+      const userPromises = userData.map(user => {
+        return usersCreate(knex, user)
+      })
       
       
     );
-    });
+  });
 };
