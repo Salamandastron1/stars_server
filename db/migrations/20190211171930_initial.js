@@ -5,7 +5,12 @@ exports.up = function(knex, Promise) {
       table.string('username');
       table.string('email').unique();
       table.string('password');
-    }
+      table.integer('stars');
+    },
+    knex.schema.createTable('avatars', table => {
+      table.increments('id').primary();
+      table.string('avatar_url');
+    })
   ])
 };
 
