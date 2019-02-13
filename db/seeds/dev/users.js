@@ -26,17 +26,17 @@ const avatar = [
 function usersCreate(knex, user) {
   const { username, email, password, stars } = user;
   if(stars) {
-    knex('users').insert({
+    return knex('users').insert({
       username,
       email,
       password,
       stars,
-    }).then(userId => )
+    })
   }
 }
 
-function avatarsCreate(knex, avatars) {
-
+function avatarsCreate(knex, url) {
+  return knex('avatars').insert(url)
 }
 
 exports.seed = function(knex, Promise) {
@@ -47,8 +47,11 @@ exports.seed = function(knex, Promise) {
       const userPromises = userData.map(user => {
         return usersCreate(knex, user)
       })
+      const avatarPromises = avatars.map(url => {
+        return avatarsCreate(url)
+      })
       
-      
+      return Promise.all([...userPromises, ...avatarPromises)
     );
   });
 };
