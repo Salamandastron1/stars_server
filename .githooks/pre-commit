@@ -6,7 +6,7 @@ ESLINT="$(git rev-parse --show-toplevel)/node_modules/.bin/eslint"
 
 if [[ "$STAGED_FILES" = "" ]]; then
   exit 0
-fi
+fi 
 
 PASS=true
 
