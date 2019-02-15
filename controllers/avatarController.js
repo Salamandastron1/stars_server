@@ -8,7 +8,7 @@ exports.create = function(request, response) {
     .then(id => response.status(201).json({ message: `Successfully created new avatar with id${id}`}))
     .catch(error => response.status(500).json({ error }))
 }
-
+//why the fuck isn't this working
 exports.update = function(request, response) {
   const { body } = request;
 
@@ -16,7 +16,7 @@ exports.update = function(request, response) {
     .then(() => response.status(204).json({ message: 'Successfully updated' }))
     .catch(error => response.status(500).json({ error }))
 }
-
+//I have multiple things that should be working
 exports.delete = function(request, response) {
   const { body } = request;
 
