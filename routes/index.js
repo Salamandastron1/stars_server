@@ -1,6 +1,6 @@
 const userController = require('./controllers/userController');
 const avatarController = require('./controllers/avatarController');
-
+ 
 export default function(app) {
   app.get('/users', userController.show);
   app.post('/users', userController.create);
