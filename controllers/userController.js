@@ -4,7 +4,7 @@ exports.show = function(request, response) {
   const { body } = request;
   // code here for checking params
   User.find(body)
-    .then({ stars, username} => response.status(200).json({
+    .then(({ stars, username }) => response.status(200).json({
       stars,
       username,
     }))

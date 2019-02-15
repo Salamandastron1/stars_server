@@ -7,5 +7,5 @@ export default function(app) {
   app.put('/users', userController.update);
   app.post('/avatar', avatarController.create);
   app.put('/avatar', avatarController.update);
-  app.delete('/avatar', avatarController.delete).
+  app.delete('/avatar', avatarController.delete)
 };
