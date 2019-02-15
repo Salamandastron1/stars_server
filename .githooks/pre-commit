@@ -38,4 +38,6 @@ else
   printf "\033[42mCOMMIT SUCCEEDED\033[0m\n"
 fi
 
-exit $?
+exit $? 
+
+# add in some text  
