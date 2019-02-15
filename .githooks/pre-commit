@@ -39,6 +39,3 @@ else
 fi
 
 exit $?
-
-# trying to commit angain
-# what is wrong with people
