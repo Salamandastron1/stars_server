@@ -22,7 +22,8 @@
   },
   "scripts": {
     "test": "NODE_ENV=testing mocha",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "eslint": "./node_modules/eslint/bin/eslint.js ./*.js"
   },
   "keywords": [],
   "author": "",

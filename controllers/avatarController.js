@@ -13,7 +13,7 @@ exports.update = function(request, response) {
   const { body } = request;
 
   Avatar.update(body)
-    .then(() => response.status(204).json({ message 'Successfully updated' }))
+    .then(() => response.status(204).json({ message: 'Successfully updated' }))
     .catch(error => response.status(500).json({ error }))
 }
 
