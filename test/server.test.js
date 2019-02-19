@@ -12,5 +12,20 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('app', () => {
-
+  beforeEach(done => {
+    database.migrate
+      .rollback()
+      .then(() => database.migrate.latest())
+      .then(() => database.seed.run())
+      .then(() => done())
+      .catch(err => console.log(err.message))
+      .done();
+  })
+  afterEach(done => {
+    database.migrate
+      .rollback()
+      .then(() => done())
+      .catch(err => console.log(err.message))
+      .done();
+  })
 })
