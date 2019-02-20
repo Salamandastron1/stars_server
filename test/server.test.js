@@ -28,4 +28,15 @@ describe('app', () => {
       .catch(err => console.log(err.message))
       .done();
   })
+  describe('/', () => {
+    it('should return a list of html end points', done => {
+      chai.request(app)
+        .get('/')
+        .end((err, response) => {
+          expect(err).to.be.null;
+          expect(response).to.be.html;
+          done();
+        })
+    })
+  })
 })

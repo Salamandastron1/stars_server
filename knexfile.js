@@ -1,5 +1,5 @@
 // Update with your config settings.
-
+/*eslint-disable*/
 module.exports = {
 
   development: {
@@ -15,9 +15,9 @@ module.exports = {
   },
   testing: {
     client: 'pg',
-    connection: 'postgres://localhost/testStar',
+    connection: 'postgres://localhost/teststar',
     migrations: {
-      direction: './db/migrations',
+      directory: './db/migrations',
     },
     seeds: {
       directory: './db/seeds/testing',
