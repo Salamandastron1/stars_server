@@ -4,8 +4,12 @@ const config = require('../knexfile')[environment];
 
 const database = knex(config);
 
-function User() {
-  database.find();
-}
+const User = {
+  find() {
+    database.where();
+
+    return Promise.resolve({ stars: 2, username: 'meow' });
+  },
+};
 
 module.exports = User;
