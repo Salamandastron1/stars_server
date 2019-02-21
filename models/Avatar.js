@@ -4,16 +4,16 @@ const config = require('../knexfile')[environment];
 
 const database = knex(config);
 
-class Avatar{
+const Avatar = {
   create() {
-
-  }
+    database.where();
+  },
   update() {
 
-  }
+  },
   delete() {
 
-  }
-}
+  },
+};
 
 module.exports = Avatar;

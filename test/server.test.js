@@ -3,7 +3,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../server');
 
-const environment = 'testing';
+const environment = process.env.NODE_ENV || 'testing';
 const config  = require('../knexfile')[environment];
 const database = require('knex')(config);
 
