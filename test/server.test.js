@@ -11,6 +11,8 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
+console.log(app.get('port'))
+
 describe('app', () => {
   describe('/', () => {
     it('should return a list of end points', done => {
@@ -26,7 +28,6 @@ describe('app', () => {
   })
   describe('/users', () => {
     beforeEach(done => {
-      console.log('before')
       database.migrate
         .rollback()
         .then(() => database.migrate.latest())
@@ -35,7 +36,7 @@ describe('app', () => {
         .catch(err => console.log(err.message))
         .done();
     })
-    it('should return a list of all users', done => { 
+    it('should return a user', done => { 
       chai.request(app)
         .get('/api/v1/users')
         .send({
