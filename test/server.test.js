@@ -36,16 +36,20 @@ describe('app', () => {
         .done();
     })
     it('should return a list of all users', done => {
+      const keys = ['id', 'username', 'stars']
       chai.request(app)
         .get('/api/v1/users')
+        .send({
+          email: 'drakeathon@yahoo.com',
+          password: 'fakeandgay',
+        })
         .end((err, response) => {
-          console.log(response.body)
           expect(err).to.be.null;
           expect(response).to.be.json;
           expect(response.body).to.be.a('array');
-          for(key of response.body[0]) {
-            expect(response.body[0]).to.have.property(key)
-          }
+          expect(response.body[0]).to.have.property('id');
+          expect(response.body[0]).to.have.property('username');
+          expect(response.body[0]).to.have.property('stars');
           done();
         })
     })
