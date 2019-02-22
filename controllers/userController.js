@@ -4,10 +4,7 @@ function show(request, response) {
   const { body } = request;
   // code here for checking params
   return User.find(body)
-    .then(({ stars, username }) => response.status(200).json({
-      stars,
-      username,
-    }))
+    .then(user => response.status(200).json(user))
     .catch(error => response.status(500).json({ error }));
 }
 
@@ -15,7 +12,7 @@ function create(request, response) {
   const { body } = request;
   //  code here to check params
   User.create(body)
-    .then(id => response.status(201).json({ id }))
+    .then(user => response.status(201).json(user))
     .catch(error => response.status(500).json({ error }));
 }
 

@@ -3,7 +3,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../server');
 
-const environment = process.env.NODE_ENV || 'testing';
+const environment = 'testing';
 const config  = require('../knexfile')[environment];
 const database = require('knex')(config);
 
@@ -35,19 +35,18 @@ describe('app', () => {
         .catch(err => console.log(err.message))
         .done();
     })
-    it('should return a list of all users', done => {
+    it('should return a list of all users', done => { 
       chai.request(app)
         .get('/api/v1/users')
         .send({
           email: 'drakeathon@yahoo.com',
-          password: 'fakeandgay',
+          password: 'fakeandgaytest',
         })
         .end((err, response) => {
           expect(err).to.be.null;
-          console.log(response)
           expect(response).to.be.json;
+          // console.log(response)
           expect(response.body).to.be.a('array');
-          expect(response.body[0]).to.have.property('id');
           expect(response.body[0]).to.have.property('username');
           expect(response.body[0]).to.have.property('stars');
           done();
