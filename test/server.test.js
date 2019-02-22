@@ -34,7 +34,7 @@ describe('app', () => {
         .then(() => database.seed.run())
         .then(() => done())
         .catch(err => console.log(err.message))
-        .done();
+        done();
     })
     it('should return a user', done => { 
       chai.request(app)
