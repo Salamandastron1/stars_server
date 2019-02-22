@@ -9,7 +9,9 @@ const User = {
     return database.where({
       email,
       password,
-    });
+    })
+      .select('username', 'stars')
+      .catch(err => console.log(err.message));
   },
 };
 

@@ -36,7 +36,6 @@ describe('app', () => {
         .done();
     })
     it('should return a list of all users', done => {
-      const keys = ['id', 'username', 'stars']
       chai.request(app)
         .get('/api/v1/users')
         .send({
@@ -45,6 +44,7 @@ describe('app', () => {
         })
         .end((err, response) => {
           expect(err).to.be.null;
+          console.log(response)
           expect(response).to.be.json;
           expect(response.body).to.be.a('array');
           expect(response.body[0]).to.have.property('id');

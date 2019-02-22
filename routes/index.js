@@ -12,7 +12,7 @@ function routes(app) {
       'DELETE avatar': '/api/v1/avatar',
     });
   });
-  app.get('/api/v1/users/:id', userController.show);
+  app.get('/api/v1/users', userController.show);
   app.post('/api/v1/users', userController.create);
   app.put('/api/v1/users', userController.update);
   app.post('/api/v1/avatar', avatarController.create);
