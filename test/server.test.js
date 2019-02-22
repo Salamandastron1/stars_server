@@ -13,12 +13,12 @@ chai.use(chaiHttp);
 
 describe('app', () => {
   describe('/', () => {
-    it('should return a list of html end points', done => {
+    it('should return a list of end points', done => {
       chai.request(app)
         .get('/')
         .end((err, response) => {
           expect(err).to.be.null;
-          expect(response).to.be.html;
+          expect(response).to.be.json;
           expect(response).to.have.status(200);
           done();
         })
@@ -35,18 +35,11 @@ describe('app', () => {
         .catch(err => console.log(err.message))
         .done();
     })
-    afterEach(done => {
-      console.log('after')
-      database.migrate
-        .rollback()
-        .then(() => done())
-        .catch(err => console.log(err.message))
-        .done();
-    })
     it('should return a list of all users', done => {
       chai.request(app)
-        .get('/users')
+        .get('/api/v1/users')
         .end((err, response) => {
+          console.log(response.body)
           expect(err).to.be.null;
           expect(response).to.be.json;
           expect(response.body).to.be.a('array');
