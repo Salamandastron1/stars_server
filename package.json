@@ -21,7 +21,7 @@
     "nodemon": "^1.18.9"
   },
   "scripts": {
-    "test": "NODE_ENV=testing mocha --exit",
+    "test": "NODE_ENV=testing mocha",
     "start": "nodemon server.js",
     "eslint": "./node_modules/eslint/bin/eslint.js ./*.js"
   },
