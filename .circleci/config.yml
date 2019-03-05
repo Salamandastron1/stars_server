@@ -31,8 +31,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
-      - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.6
+      - run: sudo npm install postgresql-client-9.6
       - run: |
           psql \
           -c "CREATE DATABASE teststar;"
