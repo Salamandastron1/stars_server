@@ -10,9 +10,9 @@ jobs:
           - PGUSER: ubuntu
       - image: circleci/postgres:10.4
          environment:
-         - POSTGRES_USER: ubuntu
-         - POSTGRES_DB: teststar
-         - POSTGRES_PASSWORD: ""
+          - POSTGRES_USER: ubuntu
+          - POSTGRES_DB: teststar
+          - POSTGRES_PASSWORD: ""
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
