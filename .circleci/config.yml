@@ -4,6 +4,8 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
+        environment:
+            TEST_DATABASE_URL: postgresql://root@localhost/circle_test
       - image: circleci/postgres:9.6.5-alpine-ram
 
 
@@ -29,7 +31,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
-      - run: sudo apt install -y postgresql-client || true
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-9.6
       - run: |
           psql \
           -c "CREATE DATABASE teststar;"
