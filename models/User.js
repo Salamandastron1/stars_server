@@ -5,10 +5,15 @@ const config = require('../knexfile')[environment];
 const database = knex(config);
 
 const User = {
-  find() {
-    database.where();
-
-    return Promise.resolve({ stars: 2, username: 'meow' });
+  find({ email, password }) {
+    return database('users')
+      .where({
+        email,
+        password,
+      })
+      .select('username', 'stars')
+      .then(data => data)
+      .catch(err => err.message);
   },
 };
 
