@@ -8,7 +8,7 @@ jobs:
           - NODE_ENV: testing
           - PGHOST: 127.0.0.1
           - PGUSER: ubuntu
-          
+
       - image: circleci/postgres:10.4
         environment:
           - POSTGRES_USER: ubuntu
@@ -41,8 +41,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
-      - run:
-          name: Running Test
-          command: |
-            psql -c "create database teststar" -U postgres
+      # - run:
+      #     name: Running Test
+      #     command: |
+      #       psql -c "create database teststar" -U postgres
       - run: npm test
