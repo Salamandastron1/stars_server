@@ -5,9 +5,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:7.10
         environment:
-            TEST_DATABASE_URL: postgresql://root@localhost/circle_test
-      - image: circleci/postgres:9.6.5-alpine-ram
-
+          - NODE_ENV: testing
+          - PGHOST: 127.0.0.1
+          - PGUSER: ubuntu
+      - image: circleci/postgres:10.4
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -18,7 +19,9 @@ jobs:
 
     steps:
       - checkout
-
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -26,13 +29,14 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: npm install
+      - run: sudo apt-get install postgresql-client
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
-      - run: sudo npm install postgresql-client-9.6
-      - run: |
-          psql \
-          -c "CREATE DATABASE teststar;"
+      - run:
+          name: Running Test
+          command: |
+            psql -c "create database teststar" -U postgres
       - run: npm test
