@@ -4,11 +4,15 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-        # environment:
-        #   - NODE_ENV: testing
-        #   - PGHOST: 127.0.0.1
-        #   - PGUSER: ubuntu
+        environment:
+          - NODE_ENV: testing
+          - PGHOST: 127.0.0.1
+          - PGUSER: ubuntu
       - image: circleci/postgres:10.4
+         environment:
+         - POSTGRES_USER: ubuntu
+         - POSTGRES_DB: teststar
+         - POSTGRES_PASSWORD: ""
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
