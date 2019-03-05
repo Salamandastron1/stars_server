@@ -4,9 +4,8 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-        environment:
-          TEST_DATABASE_URL: postgresql://root@localhost/circle_test
-      - image: circleci/postgres:9.6.5-alpine-ram
+      - image: circleci/postgres:9.6.5-alpine
+
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,13 +23,13 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run:
-          name: Setup DB
-          command: psql -c 'CREATE DATABASE teststar;' -U postgres
       - run: npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run tests!
+      - run: |
+          psql \
+          -c "CREATE DATABASE teststar;"
       - run: npm test
