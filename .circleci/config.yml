@@ -29,6 +29,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: npm install
+      - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client
       - save_cache:
           paths:
