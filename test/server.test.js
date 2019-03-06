@@ -21,6 +21,7 @@ describe('app', () => {
         .end((err, response) => {
           expect(err).to.be.null;
           expect(response).to.be.json;
+          console.log(response)
           expect(response).to.have.status(200);
           done();
         })
