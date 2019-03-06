@@ -46,7 +46,7 @@ describe('app', () => {
         .end((err, response) => {
           expect(err).to.be.null;
           expect(response).to.be.json;
-          // console.log(response)
+          console.log(response)
           expect(response.body).to.be.a('array');
           expect(response.body[0]).to.have.property('username');
           expect(response.body[0]).to.have.property('stars');
