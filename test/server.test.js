@@ -27,22 +27,25 @@ describe('app', () => {
     })
   })
   describe('/users', () => {
-    // beforeEach(done => {
-    //   database.migrate
-    //     .rollback()
-    //     .then(() => database.migrate.latest())
-    //     .then(() => database.seed.run())
-    //     .then(() => done())
-    //     .catch(err => console.log(err.message))
-    //     done();
-    // })
-    it('should return a user', done => {
+    beforeEach(done => {
       database.migrate
         .rollback()
         .then(() => database.migrate.latest())
         .then(() => database.seed.run())
         .then(() => done())
         .catch(err => console.log(err.message))
+        done();
+    })
+    it('should return a user', done => {
+      // database.migrate
+      //   .rollback()
+      //   .then(() => database.migrate.latest())
+      //   .then(() => database.seed.run())
+      //   .then(() => {
+      //     console.log('database create')
+      //     done()
+      //   })
+      //   .catch(err => console.log(err.message))
       chai.request(app)
         .get('/api/v1/users')
         .send({
@@ -53,6 +56,7 @@ describe('app', () => {
           expect(err).to.be.null;
           expect(response).to.be.json;
           console.log(response.body)
+          expect(response).to.have.status(200);
           expect(response.body).to.be.a('array');
           expect(response.body[0]).to.have.property('username');
           expect(response.body[0]).to.have.property('stars');
