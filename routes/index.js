@@ -13,21 +13,6 @@ function routes(app) {
       'DELETE avatar': '/api/v1/avatar',
     });
   });
-  app.use('/api/v1/users/', (req, res, next) => {
-    const { body } = req;
-    if (Object.keys(body) > 2) {
-      return res.status(403).json({
-        message: 'forbidden amount of sent parameters',
-      });
-    }
-    const missingProps = [];
-    ['email', 'password'].forEach((param) => {
-      if (!body[param]) {
-        missingProps.push(param);
-      }
-    });
-    next();
-  });
   app.get('/api/v1/users', userController.show);
   app.post('/api/v1/users', userController.create);
   app.put('/api/v1/users', userController.update);
