@@ -12,6 +12,23 @@ function routes(app) {
       'DELETE avatar': '/api/v1/avatar',
     });
   });
+  app.use('/api/v1/users/, function (req, res, next) {
+    const { body } = request;
+    let counter = 0;
+    let missingProps = [];
+    ['email', 'password'].forEach(param => {
+      if(!body[param]) {
+        missingProps.push(param);
+      }
+    })
+    for(let char in body) {
+      if(counter > 2) {
+        break;
+      }
+      counter++;
+    }
+    next()
+  })
   app.get('/api/v1/users', userController.show);
   app.post('/api/v1/users', userController.create);
   app.put('/api/v1/users', userController.update);

@@ -91,7 +91,25 @@ describe('app', () => {
             done();
           })
       })
-      it('should deny if user exists', () => {
+      it('it should deny if there are more params than required', done => {
+        chai.request(app)
+          .post('/api/v1/users')
+          .send({
+            email: 'drakeathon@yahoo.com',
+            password: 'fakeandgaytest',
+            evil: 'gonnafuckyoshit'
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(403);
+            expect(response.body).to.have.property('message')
+            expect(response.body.message).to.be.a('string');
+            done()
+          })
+        
+      })
+      it('should deny if user exists', done => {
         chai.request(app)
           .post('/api/v1/users')
           .send({
@@ -104,6 +122,7 @@ describe('app', () => {
             expect(response).to.have.status(500);
             expect(response.body).to.have.property('message');
             expect(response.body.message).to.be.a('string');
+            done()
           })
       })
     })
