@@ -11,9 +11,22 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-console.log(app.get('port'))
-
 describe('app', () => {
+  beforeEach(done => {
+    database.migrate
+      .rollback()
+      .then(() => database.migrate.latest())
+      .then(() => database.seed.run())
+      .then(() => done())
+      .catch(err => console.log(err.message))
+      .done();
+  })
+  afterEach(function (done) {
+    database.migrate.rollback()
+      .then(function () {
+        done();
+      });
+  });
   describe('/', () => {
     it('should return a list of end points', done => {
       chai.request(app)
@@ -27,15 +40,7 @@ describe('app', () => {
     })
   })
   describe('/users', () => {
-    beforeEach(done => {
-      database.migrate
-        .rollback()
-        .then(() => database.migrate.latest())
-        .then(() => database.seed.run())
-        .then(() => done())
-        .catch(err => console.log(err.message))
-        done();
-    })
+    
     it('should return a user', done => {
       // database.migrate
       //   .rollback()
