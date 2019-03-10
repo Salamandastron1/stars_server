@@ -25,7 +25,7 @@ describe('app', () => {
       .then(function () {
         done();
       });
-    
+    process.removeAllListeners();
   });
   describe('/', () => {
     it('should return a list of end points', done => {
@@ -59,6 +59,8 @@ describe('app', () => {
           })
       })
       it('should return an error if password is wrong', done => {
+        console.log(process.eventNames())
+
         chai.request(app)
           .get('/api/v1/users')
           .send({
@@ -74,23 +76,23 @@ describe('app', () => {
           })
       })
     })
-    // describe('POST', () => {
-    //   it('should create a user', done => {
-    //     chai.request(app)
-    //       .post('/api/v1/users')
-    //       .send({
-    //         email: 'jimparody@yahoo.com',
-    //         password: 'Wicked1!',
-    //       })
-    //       .end((err, response) => {
-    //         expect(err).to.be.null;
-    //         expect(response).to.be.json;
-    //         expect(response).to.have.status(200);
-    //         expect(response.body).to.be.a('array');
-    //         expect(response)
-    //         done();
-    //       })
-    //   })
-    // })
+    describe('POST', () => {
+      it('should create a user', done => {
+        chai.request(app)
+          .post('/api/v1/users')
+          .send({
+            email: 'jimparody@yahoo.com',
+            password: 'Wicked1!',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(201);
+            expect(response.body).to.be.a('array');
+            expect(response.body[0]).to.be.a('number')
+            done();
+          })
+      })
+    })
   })
 })
