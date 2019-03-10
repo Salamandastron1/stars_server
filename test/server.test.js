@@ -19,13 +19,13 @@ describe('app', () => {
       .then(() => database.seed.run())
       .then(() => done())
       .catch(err => console.log(err.message))
-      .done();
   })
   afterEach(function (done) {
     database.migrate.rollback()
       .then(function () {
         done();
       });
+    
   });
   describe('/', () => {
     it('should return a list of end points', done => {
@@ -40,33 +40,57 @@ describe('app', () => {
     })
   })
   describe('/users', () => {
-    
-    it('should return a user', done => {
-      // database.migrate
-      //   .rollback()
-      //   .then(() => database.migrate.latest())
-      //   .then(() => database.seed.run())
-      //   .then(() => {
-      //     console.log('database create')
-      //     done()
-      //   })
-      //   .catch(err => console.log(err.message))
-      chai.request(app)
-        .get('/api/v1/users')
-        .send({
-          email: 'drakeathon@yahoo.com',
-          password: 'fakeandgaytest',
-        })
-        .end((err, response) => {
-          expect(err).to.be.null;
-          expect(response).to.be.json;
-          console.log(response.body)
-          expect(response).to.have.status(200);
-          expect(response.body).to.be.a('array');
-          expect(response.body[0]).to.have.property('username');
-          expect(response.body[0]).to.have.property('stars');
-          done();
-        })
+    describe('GET', () => {
+      it('should return a user', done => {
+        chai.request(app)
+          .get('/api/v1/users')
+          .send({
+            email: 'drakeathon@yahoo.com',
+            password: 'fakeandgaytest',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(200);
+            expect(response.body).to.be.a('array');
+            expect(response.body[0]).to.have.property('username');
+            expect(response.body[0]).to.have.property('stars');
+            done();
+          })
+      })
+      it('should return an error if password is wrong', done => {
+        chai.request(app)
+          .get('/api/v1/users')
+          .send({
+            email: 'drakeathon@yahoo.com',
+            password: 'meowmixmeowmix',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(401);
+            expect(response.body).to.have.property('message');
+            done();
+          })
+      })
     })
+    // describe('POST', () => {
+    //   it('should create a user', done => {
+    //     chai.request(app)
+    //       .post('/api/v1/users')
+    //       .send({
+    //         email: 'jimparody@yahoo.com',
+    //         password: 'Wicked1!',
+    //       })
+    //       .end((err, response) => {
+    //         expect(err).to.be.null;
+    //         expect(response).to.be.json;
+    //         expect(response).to.have.status(200);
+    //         expect(response.body).to.be.a('array');
+    //         expect(response)
+    //         done();
+    //       })
+    //   })
+    // })
   })
 })

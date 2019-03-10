@@ -12,7 +12,12 @@ const User = {
         password,
       })
       .select('username', 'stars')
-      .then(data => data)
+      .then((data) => {
+        if (data.length) {
+          return data;
+        }
+        return null;
+      })
       .catch(err => err.message);
   },
 };
