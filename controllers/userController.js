@@ -4,7 +4,12 @@ function show(request, response) {
   const { body } = request;
   // code here for checking params
   return User.find(body)
-    .then(user => response.status(200).json(user))
+    .then((user) => {
+      if (user) {
+        return response.status(200).json(user);
+      }
+      return response.status(401).json({ message: 'incorrect password' });
+    })
     .catch(error => response.status(500).json({ error }));
 }
 

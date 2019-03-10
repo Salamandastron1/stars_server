@@ -10,7 +10,7 @@ const userData = [
     username: 'Drake',
     email: 'drakeathon@yahoo.com',
     password: 'fakeandgaytest',
-    stars: 50,
+    stars: 60,
   },
   {
     username: 'Dina',
