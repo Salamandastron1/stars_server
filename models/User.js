@@ -17,14 +17,11 @@ const User = {
           return data;
         }
         return null;
-      })
-      .catch(err => err);
+      });
   },
   create({ email, password }) {
     return database('users')
-      .insert({ email, password }, 'id')
-      .then(id => id)
-      .catch(err => err);
+      .insert({ email, password }, 'id');
   },
 };
 

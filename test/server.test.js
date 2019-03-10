@@ -59,8 +59,6 @@ describe('app', () => {
           })
       })
       it('should return an error if password is wrong', done => {
-        console.log(process.eventNames())
-
         chai.request(app)
           .get('/api/v1/users')
           .send({
@@ -91,6 +89,21 @@ describe('app', () => {
             expect(response.body).to.be.a('array');
             expect(response.body[0]).to.be.a('number')
             done();
+          })
+      })
+      it('should deny if user exists', () => {
+        chai.request(app)
+          .post('/api/v1/users')
+          .send({
+            email: 'drakeathon@yahoo.com',
+            password: 'fakeandgaytest',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(500);
+            expect(response.body).to.have.property('message');
+            expect(response.body.message).to.be.a('string');
           })
       })
     })

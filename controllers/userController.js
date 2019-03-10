@@ -18,7 +18,7 @@ function create(request, response) {
   //  code here to check params
   User.create(body)
     .then(user => response.status(201).json(user))
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ message: error.message }));
 }
 
 function update(request, response) {
