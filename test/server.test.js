@@ -11,6 +11,7 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
+
 describe('app', () => {
   beforeEach(done => {
     database.migrate
@@ -26,7 +27,8 @@ describe('app', () => {
         done();
       })
       .catch(error => console.log(error))
-    process.removeAllListeners();
+    // process.removeListener();
+    
   });
   describe('/', () => {
     it('should return a list of end points', done => {
@@ -143,4 +145,5 @@ describe('app', () => {
       })
     })
   })
+  process.removeAllListeners();
 })
