@@ -1,8 +1,8 @@
-/*eslint-disable*/
 const userController = require('../controllers/userController');
 const avatarController = require('../controllers/avatarController');
 
 function routes(app) {
+  app.use('/api/v1/users', userController.cleanParams);
   app.get('/', (request, response) => {
     response.send({
       'GET user': '/api/v1/users/:id',

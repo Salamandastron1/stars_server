@@ -1,3 +1,4 @@
+/*eslint-disable*/
 const User = require('../models/User');
 
 function show(request, response) {
@@ -29,8 +30,28 @@ function update(request, response) {
     .catch(error => response.status(500).json({ error }));
 }
 
+function cleanParams(req, res, next) {
+  const { body } = req;
+  if (Object.keys(body).length > 2) {
+    return res.status(403).json({
+      message: 'forbidden amount of sent parameters',
+    });
+  }
+  const missingParams = [];
+  ['email', 'password'].forEach((param) => {
+    if (!body[param]) {
+      missingParams.push(param);
+    }
+  });
+  if (missingParams.length) {
+    return res.status(403).json({ message: `You are missing these parameters in your body: ${missingParams}` });
+  }
+  next();
+}
+
 module.exports = {
   show,
   create,
   update,
+  cleanParams,
 };

@@ -12,21 +12,7 @@ const corsOptions = {
 app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/v1/users', (req, res, next) => {
-  const { body } = req;
-  if (Object.keys(body).length > 2) {
-    return res.status(403).json({
-      message: 'forbidden amount of sent parameters',
-    });
-  }
-  const missingProps = [];
-  ['email', 'password'].forEach((param) => {
-    if (!body[param]) {
-      missingProps.push(param);
-    }
-  });
-  next();
-});
+
 
 routes(app);
 

@@ -24,7 +24,8 @@ describe('app', () => {
     database.migrate.rollback()
       .then(function () {
         done();
-      });
+      })
+      .catch(error => console.log(error))
     process.removeAllListeners();
   });
   describe('/', () => {
@@ -108,6 +109,21 @@ describe('app', () => {
             done()
           })
         
+      })
+      it('should deny if params are missing', done => {
+        chai.request(app)
+          .post('/api/v1/users')
+          .send({
+            email: 'drakeathon@yahoo.com',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(403);
+            expect(response.body).to.have.property('message')
+            expect(response.body.message).to.be.a('string');
+            done()
+          })
       })
       it('should deny if user exists', done => {
         chai.request(app)
