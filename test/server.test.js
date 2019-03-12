@@ -58,6 +58,7 @@ describe('app', () => {
             expect(response.body).to.be.a('array');
             expect(response.body[0]).to.have.property('username');
             expect(response.body[0]).to.have.property('stars');
+            expect(response.body[0]).to.have.property('id');
             done();
           })
       })
@@ -147,7 +148,7 @@ describe('app', () => {
     describe('PUT', () => {
       it('should update the amount of stars a user has', done => {
         chai.request(app)
-          .put('/api/v1/users/id')
+          .put('/api/v1/users/1')
           .send({
             stars: 3,
           })

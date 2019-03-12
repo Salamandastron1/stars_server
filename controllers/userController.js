@@ -32,6 +32,10 @@ function update(request, response) {
 
 function cleanParams(req, res, next) {
   const { body } = req;
+
+  if(req.method === 'PUT') {
+    next();
+  }
   if (Object.keys(body).length > 2) {
     return res.status(403).json({
       message: 'forbidden amount of sent parameters',

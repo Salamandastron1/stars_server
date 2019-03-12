@@ -15,7 +15,7 @@ function routes(app) {
   });
   app.get('/api/v1/users', userController.show);
   app.post('/api/v1/users', userController.create);
-  app.put('/api/v1/users', userController.update);
+  app.put('/api/v1/users/:id', userController.update);
   app.post('/api/v1/avatar', avatarController.create);
   app.put('/api/v1/avatar', avatarController.update);
   app.delete('/api/v1/avatar', avatarController.delete);
