@@ -11,7 +11,7 @@ function show(request, response) {
       }
       return response.status(401).json({ message: 'incorrect password' });
     })
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ message: error.message }));
 }
 
 function create(request, response) {
@@ -23,11 +23,13 @@ function create(request, response) {
 }
 
 function update(request, response) {
-  const { body } = request;
-  // add in code for checking params from body
-  User.update(body)
-    .then(() => response.status(204).json({ message: 'Stars updated' }))
-    .catch(error => response.status(500).json({ error }));
+  const { body, params } = request;
+  User.update(params.id, body.stars)
+    .then(data => {
+      response.setHeader('Content-Type', 'application/json');
+      response.status(204).json({ message: `Stars updated to ${data[0].stars}` })
+    })
+    .catch(error => response.status(500).json({ message: error.message }));
 }
 
 function cleanParams(req, res, next) {
@@ -35,22 +37,23 @@ function cleanParams(req, res, next) {
 
   if(req.method === 'PUT') {
     next();
-  }
-  if (Object.keys(body).length > 2) {
-    return res.status(403).json({
-      message: 'forbidden amount of sent parameters',
-    });
-  }
-  const missingParams = [];
-  ['email', 'password'].forEach((param) => {
-    if (!body[param]) {
-      missingParams.push(param);
+  } else {
+    if (Object.keys(body).length > 2) {
+      return res.status(403).json({
+        message: 'forbidden amount of sent parameters',
+      });
     }
-  });
-  if (missingParams.length) {
-    return res.status(403).json({ message: `You are missing these parameters in your body: ${missingParams}` });
+    const missingParams = [];
+    ['email', 'password'].forEach((param) => {
+      if (!body[param]) {
+        missingParams.push(param);
+      }
+    });
+    if (missingParams.length) {
+      return res.status(403).json({ message: `You are missing these parameters in your body: ${missingParams}` });
+    }
+    next();
   }
-  next();
 }
 
 module.exports = {

@@ -11,7 +11,7 @@ const User = {
         email,
         password,
       })
-      .select('username', 'stars')
+      .select('username', 'stars', 'id')
       .then((data) => {
         if (data.length) {
           return data;
@@ -23,6 +23,11 @@ const User = {
     return database('users')
       .insert({ email, password }, 'id');
   },
+  update(id, stars) {
+    return database('users')
+      .where('id', id)
+      .update({stars}, ['stars'])
+  }
 };
 
 module.exports = User;

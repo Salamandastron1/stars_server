@@ -155,8 +155,7 @@ describe('app', () => {
           .end((err, response) => {
             expect(err).to.be.null;
             expect(response).to.be.json;
-            console.log(response.body)
-            expect(response).to.have.status(202);
+            expect(response).to.have.status(204);
             expect(response.body).to.be.a('object');
             done()
           })
