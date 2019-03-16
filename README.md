@@ -22,13 +22,14 @@
 * Mocha/Chai && ChaiHTTP
 * Knex
 * Circle CI
+* githooks & bash for automatic linting
+* eslint w/ Airbnb style guide
 
 ### Setup
 
 1. Clone down repo
 2. `npm install` from root directory
 3. `npm start` and visit `localhost:3000` in your browser
-4. You will need to 
 
 ### Test Driven Development
 
