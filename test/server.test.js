@@ -225,6 +225,16 @@ describe('app', () => {
           })
       })
     })
+    describe('POST', () => {
+      it('should create a new avatar url', () => {
+        chai.request(app)
+          .post('/api/v1/avatar')
+          .send({
+            avatar_url: 'www.meowmix.please',
+            threshold: 35
+          })
+      })
+    })
   })
   process.removeAllListeners();
 })

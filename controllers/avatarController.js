@@ -38,6 +38,10 @@ function cleanParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
 
+  if (request.method === 'POST') {
+    next();
+  }
+
   if (keys.length > 1 || keys.length <= 0) {
     return response.status(401).json({ message: 'Invalid number of parameters' });
   }
@@ -48,10 +52,46 @@ function cleanParams(request, response, next) {
   return null;
 }
 
+function postParams(request, response, next) {
+  const missingParams = [];
+  const { body } = request;
+  const keys = Object.keys(body);
+  const format = 'Required format OBJECT {  avatar_url: [string], threshold: [number] }';
+
+  if (request.method !== 'POST') {
+    next();
+  }
+
+  if (keys.length > 2 || keys.length < 2) {
+    return response.status(403).json({ message: `You have invalid amount of entries. ${format}` });
+  }
+
+  ['threshold', 'avatar_url'].forEach((key) => {
+    if (!body[key]) {
+      missingParams.push(key);
+    }
+    if (key === 'threshold' && typeof body.key !== 'number') {
+      missingParams.push(key);
+    }
+    if (key === 'avatar_url' && typeof body.key !== 'string') {
+      missingParams.push(key);
+    }
+  });
+  if (missingParams.length) {
+    return response.status(400).json({
+      message: `These elements were missing or their data types incorrect ${missingParams}. ${format}`,
+    });
+  }
+  next();
+
+  return null;
+}
+
 module.exports = {
   retrieve,
   create,
   update,
   remove,
   cleanParams,
+  postParams,
 };

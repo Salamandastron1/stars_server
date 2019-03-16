@@ -4,11 +4,13 @@ const avatarController = require('../controllers/avatarController');
 function routes(app) {
   app.use('/api/v1/users', userController.cleanParams);
   app.use('/api/v1/avatar', avatarController.cleanParams);
+  app.use('/api/v1/avatar', avatarController.postParams);
   app.get('/', (request, response) => {
     response.send({
-      'GET user': '/api/v1/users/:id',
+      'GET user': '/api/v1/users',
       'POST users': '/api/v1/users',
       'PUT users': '/api/v1/users/:id',
+      'GET avatars': '/api/v1/avatar',
       'POST avatar': '/api/v1/avatar',
       'PUT avatar': '/api/v1/avatar',
       'DELETE avatar': '/api/v1/avatar',
