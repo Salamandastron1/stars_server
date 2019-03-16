@@ -226,7 +226,7 @@ describe('app', () => {
       })
     })
     describe('POST', () => {
-      it('should create a new avatar url', () => {
+      it('should create a new avatar url', done => {
         chai.request(app)
           .post('/api/v1/avatar')
           .send({
@@ -237,9 +237,52 @@ describe('app', () => {
             expect(err).to.be.null;
             expect(response).to.be.json;
             expect(response).to.have.status(201);
-            console.log(response.body)
             expect(response.body).to.be.a('array');
+            expect(response.body[0]).to.have.property('id');
             done()
+          })
+      })
+      it('should reject  post with the wrong keys in body', done => {
+        chai.request(app)
+          .post('/api/v1/avatar')
+          .send({
+            avatar: 'urlulrurlstring',
+            threshold: 34,
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(400);
+            expect(response.body).to.have.property('message');
+            done()
+          })
+      })
+      it('should reject if there are too many keys', done => {
+        chai.request(app)
+          .post('/api/v1/avatar')
+          .send({
+            meow: 34,
+            threshold: 74,
+            avatar_url: 'urlstring',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(403);
+            expect(response.body).to.have.property('message');
+            done()
+          })
+      })
+      it('should reject if there are no keys present', done => {
+        chai.request(app)
+          .post('/api/v1/avatar')
+          .send({})
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(403);
+            expect(response.body).to.have.property('message');
+            done();
           })
       })
     })

@@ -10,8 +10,9 @@ const Avatar = {
       .where('threshold', '<', stars)
       .select('avatar_url');
   },
-  create() {
-    // database.where();
+  create(avatar) {
+    return database('avatars')
+      .insert(avatar, ['id']);
   },
   update() {
 
