@@ -291,7 +291,7 @@ describe('app', () => {
         chai.request(app)
           .put('/api/v1/avatar')
           .send({
-            threshold: 25,
+            id: 25,
           })
           .end((err, response) => {
             expect(err).to.be.null;
@@ -300,6 +300,20 @@ describe('app', () => {
             console.log(response.body)
             expect(response.body).to.be.a('array')
             done();
+          })
+      })
+      it('should reject if parameters are incorrect', done => {
+        chai.request(app)
+          .put('/api/v1/avatar')
+          .send({
+            id: 12,
+            threshold: 23,
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(400);
+            done()
           })
       })
     })
