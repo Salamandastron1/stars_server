@@ -87,6 +87,7 @@ function postParams(request, response, next) {
 function putParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
+  const foundParams = [];
 
   if (request.method !== 'PUT') {
     return next();
@@ -95,7 +96,13 @@ function putParams(request, response, next) {
     return response.status(403).json({ message: 'Invalid amount of entries sent' });
   }
 
-  if (!body.avatar_url && body.threshold) {
+  keys.forEach((key) => {
+    if (key === 'avatar_url' || key === 'threshold') {
+      foundParams.push(key);
+    }
+  });
+
+  if (!foundParams.length) {
     return response.status(400).json({ message: 'invalid keys. You may use the following format with one or all keys Object { avatar_url: [string], threshold: [number] }' });
   }
 
