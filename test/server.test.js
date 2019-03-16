@@ -160,5 +160,11 @@ describe('app', () => {
       })
     })
   })
+  describe('avatars', () => {
+    it('should return an avatar defined by star amount', done => {
+      chai.request(app)
+        .get('/api/v1/avatar/3')
+    })
+  })
   process.removeAllListeners();
 })

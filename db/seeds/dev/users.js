@@ -18,9 +18,9 @@ const userData = [
   },
 ];
 const avatars = [
-  'www.hellokitty.com/url?3',
-  'www.kittykatsrcool.org/users/api/v3/user=moot?moot',
-  'https//:localhost/3000',
+  { url: 'www.hellokitty.com/url?3', threshold: 50 },
+  { url: 'www.kittykatsrcool.org/users/api/v3/user=moot?moot', threshold: 100 },
+  { url: 'https//:localhost/3000', threshold: 150 },
 ];
 
 function usersCreate(knex, user) {
@@ -38,9 +38,9 @@ function usersCreate(knex, user) {
     stars,
   });
 }
-
+//going to need to fix this for the new object format
 function avatarsCreate(knex, url) {
-  return knex('avatars').insert({ avatar_url: url });
+  return knex('avatars').insert({ url, });
 }
 
 exports.seed = function (knex, Promise) {
