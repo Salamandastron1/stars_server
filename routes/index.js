@@ -5,6 +5,7 @@ function routes(app) {
   app.use('/api/v1/users', userController.cleanParams);
   app.use('/api/v1/avatar', avatarController.cleanParams);
   app.use('/api/v1/avatar', avatarController.postParams);
+  app.use('/api/v1/avatar', avatarController.putParams);
   app.get('/', (request, response) => {
     response.send({
       'GET user': '/api/v1/users',

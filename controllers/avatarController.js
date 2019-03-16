@@ -22,7 +22,7 @@ function update(request, response) {
   const { body } = request;
 
   Avatar.update(body)
-    .then(() => response.status(204).json({ message: 'Successfully updated' }))
+    .then(data => response.status(202).json(data))
     .catch(error => response.status(500).json({ error }));
 }
 
@@ -38,7 +38,7 @@ function cleanParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
 
-  if (request.method === 'POST') {
+  if (request.method !== 'GET') {
     return next();
   }
 
@@ -84,6 +84,33 @@ function postParams(request, response, next) {
   return next();
 }
 
+function putParams(request, response, next) {
+  const { body } = request;
+  const keys = Object.keys(body);
+  const allowed = {
+    threshold: true,
+    avatar_url: true,
+  };
+  const found = [];
+
+  if (request.method !== 'PUT') {
+    return next();
+  }
+  if (keys.length <= 0 || keys.length > 2) {
+    return response.status(403).json({ message: 'Invalid amount of entries sent' });
+  }
+  keys.forEach((key) => {
+    if (!allowed[key]) {
+      found.push(key);
+    }
+  });
+  if (found.length) {
+    return response.status(400).json({ message: `invalid keys. ${found} You may use the following format with one or all keys Object { avatar_url: [string], threshold: [number] }` });
+  }
+
+  return next();
+}
+
 module.exports = {
   retrieve,
   create,
@@ -91,4 +118,5 @@ module.exports = {
   remove,
   cleanParams,
   postParams,
+  putParams,
 };
