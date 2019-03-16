@@ -29,7 +29,7 @@ const User = {
 
     return database('users')
       .where('id', id)
-      .update({ newStars }, ['stars']);
+      .update({ stars: newStars }, ['stars']);
   },
 };
 
