@@ -25,10 +25,7 @@ function create(request, response) {
 function update(request, response) {
   const { body, params } = request;
   User.update(params.id, body.stars)
-    .then(data => {
-      response.setHeader('Content-Type', 'application/json');
-      response.status(204).json({ message: `Stars updated to ${data[0].stars}` })
-    })
+    .then(data => response.sendStatus(204))
     .catch(error => response.status(500).json({ message: error.message }));
 }
 

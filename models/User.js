@@ -23,11 +23,14 @@ const User = {
     return database('users')
       .insert({ email, password }, 'id');
   },
-  update(id, stars) {
+  async update(id, stars) {
+    const oldStars = await database('users').where('id', id).select('stars')
+    stars += oldStars[0].stars;
+    
     return database('users')
       .where('id', id)
-      .update({stars}, ['stars'])
-  }
+      .update({ stars }, ['stars']);
+  },
 };
 
 module.exports = User;
