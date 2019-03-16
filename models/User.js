@@ -24,12 +24,12 @@ const User = {
       .insert({ email, password }, 'id');
   },
   async update(id, stars) {
-    const oldStars = await database('users').where('id', id).select('stars')
-    stars += oldStars[0].stars;
-    
+    const oldStars = await database('users').where('id', id).select('stars');
+    const newStars = oldStars[0].stars + stars;
+
     return database('users')
       .where('id', id)
-      .update({ stars }, ['stars']);
+      .update({ newStars }, ['stars']);
   },
 };
 
