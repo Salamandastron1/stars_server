@@ -291,13 +291,12 @@ describe('app', () => {
         chai.request(app)
           .put('/api/v1/avatar')
           .send({
-            id: 25,
+            threshold: 25,
           })
           .end((err, response) => {
             expect(err).to.be.null;
             expect(response).to.be.json;
             expect(response).to.have.status(202);
-            console.log(response.body)
             expect(response.body).to.be.a('array')
             done();
           })

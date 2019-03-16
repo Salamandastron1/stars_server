@@ -87,7 +87,11 @@ function postParams(request, response, next) {
 function putParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
-  const foundParams = [];
+  const allowed = {
+    threshold: true,
+    avatar_url: true,
+  };
+  const found = [];
 
   if (request.method !== 'PUT') {
     return next();
@@ -95,15 +99,13 @@ function putParams(request, response, next) {
   if (keys.length <= 0 || keys.length > 2) {
     return response.status(403).json({ message: 'Invalid amount of entries sent' });
   }
-
   keys.forEach((key) => {
-    if (key === 'avatar_url' || key === 'threshold') {
-      foundParams.push(key);
+    if (!allowed[key]) {
+      found.push(key);
     }
   });
-
-  if (!foundParams.length) {
-    return response.status(400).json({ message: 'invalid keys. You may use the following format with one or all keys Object { avatar_url: [string], threshold: [number] }' });
+  if (found.length) {
+    return response.status(400).json({ message: `invalid keys. ${found} You may use the following format with one or all keys Object { avatar_url: [string], threshold: [number] }` });
   }
 
   return next();
