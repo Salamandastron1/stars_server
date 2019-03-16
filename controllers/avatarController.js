@@ -45,7 +45,7 @@ function cleanParams(request, response, next) {
     return response.status(400).json({ message: 'Your inquiry must be made with the follow parameters: Object key: stars value: [number]' });
   }
   next();
-  return
+  return null;
 }
 
 module.exports = {
