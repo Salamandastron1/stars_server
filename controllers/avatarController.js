@@ -14,7 +14,7 @@ function create(request, response) {
   const { body } = request;
 
   Avatar.create(body)
-    .then(id => response.status(201).json({ message: `Successfully created new avatar with id${id}` }))
+    .then(id => response.status(201).json(id))
     .catch(error => response.status(500).json({ error }));
 }
 
@@ -48,8 +48,8 @@ function cleanParams(request, response, next) {
   if (keys[0] !== 'stars' || typeof body.stars !== 'number') {
     return response.status(400).json({ message: 'Your inquiry must be made with the follow parameters: Object key: stars value: [number]' });
   }
-  next();
-  return null;
+
+  return next();
 }
 
 function postParams(request, response, next) {
@@ -81,9 +81,8 @@ function postParams(request, response, next) {
       message: `These elements were missing or their data types incorrect ${missingParams}. ${format}`,
     });
   }
-  next();
 
-  return null;
+  return next();
 }
 
 module.exports = {

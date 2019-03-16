@@ -226,7 +226,7 @@ describe('app', () => {
       })
     })
     describe('POST', () => {
-      it('should create a new avatar url', () => {
+      it('should create a new avatar url', done => {
         chai.request(app)
           .post('/api/v1/avatar')
           .send({
@@ -239,6 +239,7 @@ describe('app', () => {
             expect(response).to.have.status(201);
             console.log(response.body)
             expect(response.body).to.be.a('array');
+            expect(response.body[0]).to.have.property('id');
             done()
           })
       })
