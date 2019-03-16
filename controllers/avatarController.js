@@ -5,7 +5,6 @@ function retrieve(request, response) {
 
   Avatar.retrieve(body)
     .then((url) => {
-      console.log(url);
       response.status(200).json(url);
     })
     .catch(error => response.status(500).json({ error: error.message }));

@@ -1,5 +1,3 @@
-/*eslint-disable*/
-
 const userData = [
   {
     username: 'Tim',
@@ -10,7 +8,7 @@ const userData = [
     username: 'Drake',
     email: 'drakeathon@yahoo.com',
     password: 'fakeandgaytest',
-    stars: 60,
+    stars: 50,
   },
   {
     username: 'Dina',
@@ -20,9 +18,9 @@ const userData = [
   },
 ];
 const avatars = [
-  'www.hellokitty.com/url?3',
-  'www.kittykatsrcool.org/users/api/v3/user=moot?moot',
-  'https//:localhost/3000',
+  { url: 'www.hellokitty.com/url?3', threshold: 50 },
+  { url: 'www.kittykatsrcool.org/users/api/v3/user=moot?moot', threshold: 100 },
+  { url: 'https//:localhost/3000', threshold: 150 },
 ];
 
 function usersCreate(knex, user) {
@@ -40,9 +38,9 @@ function usersCreate(knex, user) {
     stars,
   });
 }
-
-function avatarsCreate(knex, url) {
-  return knex('avatars').insert({ avatar_url: url });
+// going to need to fix this for the new object format
+function avatarsCreate(knex, { url, threshold }) {
+  return knex('avatars').insert({ avatar_url: url, threshold });
 }
 
 exports.seed = function (knex, Promise) {
@@ -51,7 +49,7 @@ exports.seed = function (knex, Promise) {
     .then(() => knex('users').del())
     .then(() => {
       const userPromises = userData.map(user => (usersCreate(knex, user)));
-      const avatarPromises = avatars.map(url => (avatarsCreate(knex, url)));
+      const avatarPromises = avatars.map(avatar => (avatarsCreate(knex, avatar)));
 
       return Promise.all([...userPromises, ...avatarPromises]);
     });

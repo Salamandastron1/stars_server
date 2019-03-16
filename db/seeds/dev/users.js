@@ -40,7 +40,7 @@ function usersCreate(knex, user) {
 }
 // going to need to fix this for the new object format
 function avatarsCreate(knex, { url, threshold }) {
-  return knex('avatars').insert({ url, threshold });
+  return knex('avatars').insert({ avatar_url: url, threshold });
 }
 
 exports.seed = function (knex, Promise) {

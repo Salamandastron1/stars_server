@@ -170,10 +170,9 @@ describe('app', () => {
           expect(err).to.be.null;
           expect(response).to.be.json;
           expect(response).to.have.status(200);
-          console.log(response.body)
-          expect(response.body).to.have.property('avatarUrl');
-          expect(response.body.url).to.be.a('string');
-          expe
+          expect(response.body).to.be.a('array');
+          expect(response.body[0]).to.have.property('avatar_url');
+          expect(response.body[0].avatar_url).to.be.a('string');
           done()
         })
     })

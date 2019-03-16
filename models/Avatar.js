@@ -6,7 +6,6 @@ const database = knex(config);
 
 const Avatar = {
   retrieve({ stars }) {
-    console.log(stars);
     return database('avatars')
       .where('threshold', '<', stars)
       .select('avatar_url');
