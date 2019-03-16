@@ -3,6 +3,7 @@ const avatarController = require('../controllers/avatarController');
 
 function routes(app) {
   app.use('/api/v1/users', userController.cleanParams);
+  app.use('/api/v1/avatar', avatarController.cleanParams);
   app.get('/', (request, response) => {
     response.send({
       'GET user': '/api/v1/users/:id',
@@ -16,7 +17,7 @@ function routes(app) {
   app.get('/api/v1/users', userController.show);
   app.post('/api/v1/users', userController.create);
   app.put('/api/v1/users/:id', userController.update);
-  app.get('/api/v1/avatar/:stars', avatarController.retrieve);
+  app.get('/api/v1/avatar', avatarController.retrieve);
   app.post('/api/v1/avatar', avatarController.create);
   app.put('/api/v1/avatar', avatarController.update);
   app.delete('/api/v1/avatar', avatarController.remove);

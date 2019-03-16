@@ -34,9 +34,24 @@ function remove(request, response) {
     .catch(error => response.status(500).json({ error }));
 }
 
+function cleanParams(request, response, next) {
+  const { body } = request;
+  const keys = Object.keys(body);
+
+  if (keys.length > 1 || keys.length <= 0) {
+    return response.status(401).json({ message: 'Invalid number of parameters' });
+  }
+  if (keys[0] !== 'stars' || typeof body.stars !== 'number') {
+    return response.status(400).json({ message: 'Your inquiry must be made with the follow parameters: Object key: stars value: [number]' });
+  }
+  next();
+  return
+}
+
 module.exports = {
   retrieve,
   create,
   update,
   remove,
+  cleanParams,
 };
