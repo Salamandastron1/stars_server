@@ -60,7 +60,6 @@ function postParams(request, response, next) {
   if (request.method !== 'POST') {
     return next();
   }
-
   if (keys.length > 2 || keys.length < 2) {
     return response.status(403).json({ message: `You have invalid amount of entries. ${format}` });
   }
