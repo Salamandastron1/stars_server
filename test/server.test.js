@@ -27,7 +27,6 @@ describe('app', () => {
         done();
       })
       .catch(error => console.log(error))
-    // process.removeListener();
     
   });
   describe('/', () => {
@@ -155,6 +154,91 @@ describe('app', () => {
           .end((err, response) => {
             expect(err).to.be.null;
             expect(response).to.have.status(204);
+            done()
+          })
+      })
+    })
+  })
+  describe('avatars', () => {
+    describe('GET', () => {
+      it('should return an avatar defined by star amount', done => {
+        chai.request(app)
+          .get('/api/v1/avatar')
+          .send({
+            stars: 35,
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(200);
+            expect(response.body).to.be.a('array');
+            expect(response.body[0]).to.have.property('avatar_url');
+            expect(response.body[0].avatar_url).to.be.a('string');
+            done()
+          })
+      })
+      it('should reject if extra params are sent', done => {
+        chai.request(app)
+          .get('/api/v1/avatar')
+          .send({
+            stars: 35,
+            meow: 'meow',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(401);
+            expect(response.body).to.be.a('object')
+            expect(response.body).to.have.property('message')
+            expect(response.body.message).to.be.a('string');
+            done()
+          })
+      })
+      it('should reject if wrong key is sent in the body object', done => {
+        chai.request(app)
+          .get('/api/v1/avatar')
+          .send({
+            cat: 32,
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(400)
+            expect(response.body).to.have.property('message');
+            expect(response.body.message).to.equal('Your inquiry must be made with the follow parameters: Object key: stars value: [number]')
+            done()
+          })
+      })
+      it('should reject if wrong type of value is sent in the body object', done => {
+        chai.request(app)
+          .get('/api/v1/avatar')
+          .send({
+            stars: 'meow',
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(400)
+            expect(response.body).to.have.property('message');
+            expect(response.body.message).to.equal('Your inquiry must be made with the follow parameters: Object key: stars value: [number]')
+            done()
+          })
+      })
+    })
+    describe('POST', () => {
+      it('should create a new avatar url', () => {
+        chai.request(app)
+          .post('/api/v1/avatar')
+          .send({
+            avatar_url: 'www.meowmix.please',
+            threshold: 35
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(201);
+            console.log(response.body)
+            expect(response.body).to.be.a('array');
             done()
           })
       })

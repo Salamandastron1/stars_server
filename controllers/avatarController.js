@@ -1,26 +1,96 @@
 const Avatar = require('../models/Avatar');
 
-exports.create = function(request, response) {
+function retrieve(request, response) {
   const { body } = request;
-  //code for checking params and authenticity
+
+  return Avatar.retrieve(body)
+    .then((url) => {
+      response.status(200).json(url);
+    })
+    .catch(error => response.status(500).json({ error: error.message }));
+}
+
+function create(request, response) {
+  const { body } = request;
 
   Avatar.create(body)
-    .then(id => response.status(201).json({ message: `Successfully created new avatar with id${id}`}))
-    .catch(error => response.status(500).json({ error }))
+    .then(id => response.status(201).json({ message: `Successfully created new avatar with id${id}` }))
+    .catch(error => response.status(500).json({ error }));
 }
-//why the fuck isn't this working
-exports.update = function(request, response) {
+
+function update(request, response) {
   const { body } = request;
 
   Avatar.update(body)
     .then(() => response.status(204).json({ message: 'Successfully updated' }))
-    .catch(error => response.status(500).json({ error }))
+    .catch(error => response.status(500).json({ error }));
 }
-//I have multiple things that should be working
-exports.delete = function(request, response) {
+
+function remove(request, response) {
   const { body } = request;
 
   Avatar.delete(body)
-    .then(() => response.status(204).json({ message: 'successfully deleted'}))
-    .catch(error => response.status(500).json({ error}));
+    .then(() => response.status(204).json({ message: 'successfully deleted' }))
+    .catch(error => response.status(500).json({ error }));
 }
+
+function cleanParams(request, response, next) {
+  const { body } = request;
+  const keys = Object.keys(body);
+
+  if (request.method === 'POST') {
+    return next();
+  }
+
+  if (keys.length > 1 || keys.length <= 0) {
+    return response.status(401).json({ message: 'Invalid number of parameters' });
+  }
+  if (keys[0] !== 'stars' || typeof body.stars !== 'number') {
+    return response.status(400).json({ message: 'Your inquiry must be made with the follow parameters: Object key: stars value: [number]' });
+  }
+  next();
+  return null;
+}
+
+function postParams(request, response, next) {
+  const missingParams = [];
+  const { body } = request;
+  const keys = Object.keys(body);
+  const format = 'Required format OBJECT {  avatar_url: [string], threshold: [number] }';
+  if (request.method !== 'POST') {
+    return next();
+  }
+
+  if (keys.length > 2 || keys.length < 2) {
+    return response.status(403).json({ message: `You have invalid amount of entries. ${format}` });
+  }
+
+  ['threshold', 'avatar_url'].forEach((key) => {
+    if (!body[key]) {
+      missingParams.push(key);
+    }
+    if (key === 'threshold' && typeof body[key] !== 'number') {
+      missingParams.push(key);
+    }
+    if (key === 'avatar_url' && typeof body[key] !== 'string') {
+      missingParams.push(key);
+    }
+  });
+  if (missingParams.length) {
+    return response.status(400).json({
+      message: `These elements were missing or their data types incorrect ${missingParams}. ${format}`,
+    });
+  }
+  next();
+
+  return null;
+}
+
+module.exports = {
+  retrieve,
+  create,
+  update,
+  remove,
+  cleanParams,
+  postParams,
+};
