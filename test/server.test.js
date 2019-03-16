@@ -233,6 +233,14 @@ describe('app', () => {
             avatar_url: 'www.meowmix.please',
             threshold: 35
           })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(201);
+            console.log(response.body)
+            expect(response.body).to.be.a('array');
+            done()
+          })
       })
     })
   })

@@ -3,7 +3,7 @@ const Avatar = require('../models/Avatar');
 function retrieve(request, response) {
   const { body } = request;
 
-  Avatar.retrieve(body)
+  return Avatar.retrieve(body)
     .then((url) => {
       response.status(200).json(url);
     })
@@ -39,7 +39,7 @@ function cleanParams(request, response, next) {
   const keys = Object.keys(body);
 
   if (request.method === 'POST') {
-    next();
+    return next();
   }
 
   if (keys.length > 1 || keys.length <= 0) {
@@ -57,9 +57,8 @@ function postParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
   const format = 'Required format OBJECT {  avatar_url: [string], threshold: [number] }';
-
   if (request.method !== 'POST') {
-    next();
+    return next();
   }
 
   if (keys.length > 2 || keys.length < 2) {
@@ -70,10 +69,10 @@ function postParams(request, response, next) {
     if (!body[key]) {
       missingParams.push(key);
     }
-    if (key === 'threshold' && typeof body.key !== 'number') {
+    if (key === 'threshold' && typeof body[key] !== 'number') {
       missingParams.push(key);
     }
-    if (key === 'avatar_url' && typeof body.key !== 'string') {
+    if (key === 'avatar_url' && typeof body[key] !== 'string') {
       missingParams.push(key);
     }
   });

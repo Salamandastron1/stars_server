@@ -11,7 +11,7 @@ const Avatar = {
       .select('avatar_url');
   },
   create() {
-    database.where();
+    // database.where();
   },
   update() {
 
