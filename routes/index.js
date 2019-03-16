@@ -19,7 +19,7 @@ function routes(app) {
   app.get('/api/v1/avatar/:stars', avatarController.retrieve);
   app.post('/api/v1/avatar', avatarController.create);
   app.put('/api/v1/avatar', avatarController.update);
-  app.delete('/api/v1/avatar', avatarController.delete);
+  app.delete('/api/v1/avatar', avatarController.remove);
 }
 
 module.exports = routes;

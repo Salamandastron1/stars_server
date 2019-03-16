@@ -27,7 +27,6 @@ describe('app', () => {
         done();
       })
       .catch(error => console.log(error))
-    // process.removeListener();
     
   });
   describe('/', () => {
@@ -164,6 +163,18 @@ describe('app', () => {
     it('should return an avatar defined by star amount', done => {
       chai.request(app)
         .get('/api/v1/avatar/3')
+        .send({
+          stars: 35,
+        })
+        .end((err, response) => {
+          expect(err).to.be.null;
+          expect(response).to.be.json;
+          expect(response).to.have.status(200);
+          expect(response.body).to.have.property('avatarUrl');
+          expect(response.body.url).to.be.a('string');
+          expe
+          done()
+        })
     })
   })
   process.removeAllListeners();

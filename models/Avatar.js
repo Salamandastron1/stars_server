@@ -5,13 +5,16 @@ const config = require('../knexfile')[environment];
 const database = knex(config);
 
 const Avatar = {
+  retrieve(stars) {
+    return stars;
+  },
   create() {
     database.where();
   },
   update() {
 
   },
-  delete() {
+  remove() {
 
   },
 };

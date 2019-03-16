@@ -39,8 +39,8 @@ function usersCreate(knex, user) {
   });
 }
 // going to need to fix this for the new object format
-function avatarsCreate(knex, url) {
-  return knex('avatars').insert({ url });
+function avatarsCreate(knex, { url, threshold }) {
+  return knex('avatars').insert({ url, threshold });
 }
 
 exports.seed = function (knex, Promise) {
@@ -49,7 +49,7 @@ exports.seed = function (knex, Promise) {
     .then(() => knex('users').del())
     .then(() => {
       const userPromises = userData.map(user => (usersCreate(knex, user)));
-      const avatarPromises = avatars.map(url => (avatarsCreate(knex, url)));
+      const avatarPromises = avatars.map(avatar => (avatarsCreate(knex, avatar)));
 
       return Promise.all([...userPromises, ...avatarPromises]);
     });
