@@ -297,7 +297,9 @@ describe('app', () => {
             expect(err).to.be.null;
             expect(response).to.be.json;
             expect(response).to.have.status(202);
+            console.log(response.body)
             expect(response.body).to.be.a('array')
+            done();
           })
       })
     })

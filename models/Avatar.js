@@ -14,8 +14,9 @@ const Avatar = {
     return database('avatars')
       .insert(avatar, ['id']);
   },
-  update() {
-
+  update(update) {
+    return database('avatars')
+      .insert(update, Object.keys(update));
   },
   remove() {
 

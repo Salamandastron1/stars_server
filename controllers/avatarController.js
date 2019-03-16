@@ -22,7 +22,7 @@ function update(request, response) {
   const { body } = request;
 
   Avatar.update(body)
-    .then(() => response.status(204).json({ message: 'Successfully updated' }))
+    .then(data => response.status(202).json(data))
     .catch(error => response.status(500).json({ error }));
 }
 
@@ -38,7 +38,7 @@ function cleanParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
 
-  if (request.method === 'POST') {
+  if (request.method !== 'GET') {
     return next();
   }
 
