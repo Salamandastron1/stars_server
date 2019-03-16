@@ -286,6 +286,21 @@ describe('app', () => {
           })
       })
     })
+    describe('PUT', () => {
+      it('should update an parameter if sent', done => {
+        chai.request(app)
+          .put('/api/v1/avatar')
+          .send({
+            threshold: 25,
+          })
+          .end((err, response) => {
+            expect(err).to.be.null;
+            expect(response).to.be.json;
+            expect(response).to.have.status(202);
+            expect(response.body).to.be.a('array')
+          })
+      })
+    })
   })
   process.removeAllListeners();
 })
