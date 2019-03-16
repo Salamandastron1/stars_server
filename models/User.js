@@ -11,14 +11,25 @@ const User = {
         email,
         password,
       })
-      .select('username', 'stars')
+      .select('username', 'stars', 'id')
       .then((data) => {
         if (data.length) {
           return data;
         }
         return null;
-      })
-      .catch(err => err.message);
+      });
+  },
+  create({ email, password }) {
+    return database('users')
+      .insert({ email, password }, 'id');
+  },
+  async update(id, stars) {
+    const oldStars = await database('users').where('id', id).select('stars');
+    const newStars = oldStars[0].stars + stars;
+
+    return database('users')
+      .where('id', id)
+      .update({ stars: newStars }, ['stars']);
   },
 };
 
