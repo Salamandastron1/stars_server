@@ -2,15 +2,15 @@
 exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.table('avatars', (table) => {
-      table.string('threshold')
-    })
-  ])
+      table.string('threshold');
+    }),
+  ]);
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.table('avatars', (table) => {
       table.dropColumn('threshold');
-    })
-  ])
+    }),
+  ]);
 };

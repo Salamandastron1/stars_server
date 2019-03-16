@@ -38,9 +38,9 @@ function usersCreate(knex, user) {
     stars,
   });
 }
-//going to need to fix this for the new object format
+// going to need to fix this for the new object format
 function avatarsCreate(knex, url) {
-  return knex('avatars').insert({ url, });
+  return knex('avatars').insert({ url });
 }
 
 exports.seed = function (knex, Promise) {
