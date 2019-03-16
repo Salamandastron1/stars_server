@@ -4,7 +4,10 @@ function retrieve(request, response) {
   const { body } = request;
 
   Avatar.retrieve(body)
-    .then(url => response.status(200).json(url))
+    .then((url) => {
+      console.log(url);
+      response.status(200).json(url);
+    })
     .catch(error => response.status(500).json({ error: error.message }));
 }
 
