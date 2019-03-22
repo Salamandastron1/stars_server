@@ -57,6 +57,7 @@ function postParams(request, response, next) {
   const { body } = request;
   const keys = Object.keys(body);
   const format = 'Required format OBJECT {  avatar_url: [string], threshold: [number] }';
+
   if (request.method !== 'POST') {
     return next();
   }
