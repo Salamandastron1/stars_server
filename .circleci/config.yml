@@ -25,7 +25,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
       - run: npm install
-      - run: sudo apt-get update
+      # - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client
       - save_cache:
           paths:
