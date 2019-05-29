@@ -2,3 +2,4 @@
 /coverage
 /.vscode/
 npm-debug.log
+credentials*
