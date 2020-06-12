@@ -7,13 +7,12 @@ jobs:
           NODE_ENV: testing
           PGHOST: 127.0.0.1
           PGUSER: ubuntu
-          POSTGRES_PASSWORD: ""
 
       - image: circleci/postgres
         environment:
-          POSTGRES_USER: ubuntu
           POSTGRES_DB: teststar
           POSTGRES_PASSWORD: ""
+          POSTGRES_USER: root
     working_directory: ~/repo
 
     steps:
