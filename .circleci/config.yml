@@ -7,6 +7,7 @@ jobs:
           - NODE_ENV: testing
           - PGHOST: 127.0.0.1
           - PGUSER: ubuntu
+          - POSTGRES_PASSWORD: ""
 
       - image: circleci/postgres
         environment:
