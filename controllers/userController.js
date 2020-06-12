@@ -1,4 +1,3 @@
-/*eslint-disable*/
 const User = require('../models/User');
 
 function show(request, response) {
@@ -16,7 +15,7 @@ function show(request, response) {
 
 function create(request, response) {
   const { body } = request;
-  //  code here to check params
+
   User.create(body)
     .then(user => response.status(201).json(user))
     .catch(error => response.status(500).json({ message: error.message }));
@@ -25,32 +24,34 @@ function create(request, response) {
 function update(request, response) {
   const { body, params } = request;
   User.update(params.id, body.stars)
-    .then(data => response.sendStatus(204))
+    .then(() => response.sendStatus(204))
     .catch(error => response.status(500).json({ message: error.message }));
 }
 
 function cleanParams(req, res, next) {
   const { body } = req;
+  const missingParams = [];
 
-  if(req.method === 'PUT') {
-    next();
-  } else {
-    if (Object.keys(body).length > 2) {
-      return res.status(403).json({
-        message: 'forbidden amount of sent parameters',
-      });
-    }
-    const missingParams = [];
-    ['email', 'password'].forEach((param) => {
-      if (!body[param]) {
-        missingParams.push(param);
-      }
-    });
-    if (missingParams.length) {
-      return res.status(403).json({ message: `You are missing these parameters in your body: ${missingParams}` });
-    }
-    next();
+  if (req.method === 'PUT') {
+    return next();
   }
+
+  if (Object.keys(body).length > 2) {
+    return res.status(403).json({
+      message: 'forbidden amount of sent parameters',
+    });
+  }
+
+  ['email', 'password'].forEach((param) => {
+    if (!body[param]) {
+      missingParams.push(param);
+    }
+  });
+
+  if (missingParams.length) {
+    return res.status(403).json({ message: `You are missing these parameters in your body: ${missingParams}` });
+  }
+  return next();
 }
 
 module.exports = {
